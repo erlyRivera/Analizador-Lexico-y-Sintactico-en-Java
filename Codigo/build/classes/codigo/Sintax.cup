@@ -1,0 +1,54 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Int, Float, Double, Void, Linea, Parentesis_a, Parentesis_c,
+    Llave_a, Llave_c, Main, Comita, P_Coma, Identificador, Numero, ERROR;
+
+non terminal FUNCION, INICIO, PARAMETRO;
+
+start with INICIO;
+
+INICIO ::=
+    Main Parentesis_a Parentesis_c Llave_a Llave_c |
+    FUNCION Main Parentesis_a Parentesis_c Llave_a Llave_c
+;        
+FUNCION ::=
+    Int Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    Float Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    Double Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    Void Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    Int Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    Float Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    Double Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    Void Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    FUNCION Int Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    FUNCION Float Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    FUNCION Double Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    FUNCION Void Identificador Parentesis_a Parentesis_c Llave_a Llave_c |
+    FUNCION Int Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    FUNCION Float Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    FUNCION Double Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c |
+    FUNCION Void Identificador Parentesis_a PARAMETRO Parentesis_c Llave_a Llave_c
+;
+PARAMETRO ::= 
+    Int Identificador |
+    Float Identificador |
+    Double Identificador |
+    PARAMETRO Comita Int Identificador |
+    PARAMETRO Comita Float Identificador |
+    PARAMETRO Comita Double Identificador
+;
